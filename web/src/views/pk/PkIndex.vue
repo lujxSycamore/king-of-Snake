@@ -1,14 +1,14 @@
 <template>
   <div>
-    <ContentFiled>pkview</ContentFiled>
+      <PlayGround></PlayGround>
   </div>
 </template>
 
 <script>
-import ContentFiled from "../../components/ContentField.vue"
+import PlayGround from "../../components/PlayGround.vue"
 export default {
   components: {
-    ContentFiled
+    PlayGround
   }
 }
 </script>

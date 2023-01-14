@@ -43,9 +43,8 @@ import { computed } from "vue"
 export default {
   setup(){
     const router = useRoute();
-    let current_router = computed(()=>router.name)
-    //获取当前用户处于哪一页
-    console.log()
+    let current_router = computed(()=>router.name) //获取当前用户处于哪一页
+    /* console.log() */
     return{
       current_router
     }
