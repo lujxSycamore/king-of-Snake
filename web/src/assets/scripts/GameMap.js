@@ -10,9 +10,23 @@ export class GameMap extends GameObjects {
     this.col = 13;
     this.row = 13;
 
+    this.inner_walls_count = 20;
     this.wall = [];
   }
 
+  check_continue(g,sx,sy,tx,ty){
+    //检查地图连通性
+    if (sx == tx && sy == ty) return true;
+    g[sx][sy] = true;
+    let dx = [-1,0,1,0];
+    let dy = [0,1,0,-1];
+    for (let i = 0; i < 4; i ++ ) {
+      let x = sx + dx[i], y = sy + dy[i];
+      if(!g[x][y]&&this.check_continue(g,x,y,tx,ty))
+        return true
+    }
+    return false;
+  }
   create_walls() {
     //js没有二维数组 手动初始化二维数组用于存放墙
     const bool_wall = [];
@@ -32,6 +46,26 @@ export class GameMap extends GameObjects {
       bool_wall[0][c] = true;
       bool_wall[this.row -1][c]=true;
     }
+    //创建随机障碍物
+    for(let i=0; i<this.inner_walls_count; i++){
+      for(let j=0; j<1000;j++){
+        let r=parseInt(Math.random()*this.row);
+        let c=parseInt(Math.random()*this.row);
+        if(bool_wall[r][c] || bool_wall[c][r] )
+          continue;
+        if(r==this.row-2 && c == 1 || c==this.col -2 && r == 1)
+          continue;
+        
+        bool_wall[r][c] = bool_wall[c][r] =true;
+        break;
+      }
+    }
+    //检查连通性
+    const copy_bool_wall =JSON.parse(JSON.stringify(bool_wall));
+
+    if(!this.check_continue(copy_bool_wall, this.row-2, 1, 1, this.col-2))
+      return false;
+
     //画墙
     for(let r = 0;r < this.row; r++){
       for(let c = 0; c < this.col; c++){
@@ -40,10 +74,14 @@ export class GameMap extends GameObjects {
         }
       }
     }
+    return true;
   }
 
   start() {
-    this.create_walls();
+    for(let i=0; i<1000; i++){
+      if(this.create_walls())
+        break;
+    }
   }
 
   update() {
