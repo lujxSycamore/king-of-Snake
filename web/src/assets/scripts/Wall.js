@@ -1,24 +1,24 @@
-import { GameObjects } from "./GameObjects"
+import { GameObject } from "./GameObjects";
 
-export class Wall extends GameObjects {
-  constructor(r,c,gameMap) {
-    super();
+export class Wall extends GameObject {
+    constructor(r, c, gamemap) {
+        super();
 
-    this.r = r;
-    this.c = c;
-    this.gameMap = gameMap;
-    this.color = "#E6A23C";
-  }
+        this.r = r;
+        this.c = c;
+        this.gamemap = gamemap;
+        this.color = "#E6A23C";
+    }
 
-  update() {
-   this.render(); 
-  }
+    update() {
+        this.render();
+    }
 
-  render(){
-    const length = this.gameMap.length;
-    const ctx = this.gameMap.ctx;
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.c * length, this.r * length, length, length);
-  }
+    render() {
+        const L = this.gamemap.L;
+        const ctx = this.gamemap.ctx;
 
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.c * L, this.r * L, L, L);
+    }
 }
