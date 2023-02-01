@@ -55,6 +55,7 @@ export default {
 <style scope>
 .navbar{
   background-color: #409EFF;
+
 }
 </style>
 
